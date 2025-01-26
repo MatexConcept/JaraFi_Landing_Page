@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Modal from "../components/Modal";
 import { images } from "../constants";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 const Hero = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,7 +28,9 @@ const Hero = () => {
     // This useEffect hook fetches existing email addresses from a SheetDB API when the component mounts.
     // Its purpose is to prevent duplicate email submissions to the wait list.
     const handleFetch = async () => {
+
       try {
+
         const response = await fetch(
           `https://sheetdb.io/api/v1/${sheetdbapi}`,
           {
@@ -69,28 +72,42 @@ const Hero = () => {
     }
 
     try {
-      const response = await fetch(`https://sheetdb.io/api/v1/${sheetdbapi}`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          data: [
-            {
-              name: name,
-              email: email,
-            },
-          ],
-        }),
-      });
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
+      const fullname = name;
+
+      const firstResponse = await axios.post("https://jarafibackend.vercel.app/waitlist/join", {fullname, email}, {withCredentials: true})
+
+      if (firstResponse.status === 201) {
+
+        const response = await fetch(`https://sheetdb.io/api/v1/${sheetdbapi}`, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            data: [
+              {
+                name: name,
+                email: email,
+              },
+            ],
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        handleCloseModal();
+        setSuccess("You have been added to wait list successfully");
+        toast.success("Thanks for joining our wait list we'll keep you updated");
+      } else {
+
+
+        toast.error("Not able to join waitlist");
       }
-      handleCloseModal();
-      setSuccess("You have been added to wait list successfully");
-      toast.success("Thanks for joining our wait list we'll keep you updated");
+      
+     
     } catch (error) {
       console.error("Error:", error);
       setSubmitError("An error occurred. Please try again.");
