@@ -77,7 +77,7 @@ const Hero = () => {
 
       const firstResponse = await axios.post("https://jarafibackend.vercel.app/waitlist/join", {fullname, email}, {withCredentials: true})
 
-      if (firstResponse.status === 20) {
+      if (firstResponse.status === 200) {
 
         const response = await fetch(`https://sheetdb.io/api/v1/${sheetdbapi}`, {
           method: "POST",
