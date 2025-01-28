@@ -73,9 +73,8 @@ const Hero = () => {
 
     try {
 
-      const fullname = name;
 
-      const firstResponse = await axios.post("https://jarafibackend.vercel.app/waitlist/join", {fullname, email}, {withCredentials: true})
+      const firstResponse = await axios.post("https://jarafibackend.vercel.app/waitlist/join", {fullname:name, email}, {withCredentials: true})
 
       if (firstResponse.status === 200) {
 
