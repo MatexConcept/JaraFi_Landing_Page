@@ -26,38 +26,6 @@ const Hero = () => {
     setSubmitError(null);
   };
 
-  // useEffect(() => {
-  //   // This useEffect hook fetches existing email addresses from a SheetDB API when the component mounts.
-  //   // Its purpose is to prevent duplicate email submissions to the wait list.
-  //   const handleFetch = async () => {
-
-  //     try {
-
-  //       const response = await fetch(
-  //         `https://sheetdb.io/api/v1/${sheetdbapi}`,
-  //         {
-  //           method: "GET",
-  //           headers: {
-  //             Accept: "application/json",
-  //             "Content-Type": "application/json",
-  //           },
-  //         }
-  //       );
-
-  //       if (!response.ok) {
-  //         throw new Error("Network response was not ok");
-  //       }
-
-  //       const data = await response.json();
-  //       const emails = data.map((item) => item.email).filter(Boolean);
-  //       setExistingEmails(emails);
-  //     } catch (error) {
-  //       console.error("Error fetching emails:", error);
-  //     }
-  //   };
-  //   handleFetch();
-  // }, [sheetdbapi]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -67,11 +35,7 @@ const Hero = () => {
     const name = formData.get("fullName");
     const email = formData.get("email");
 
-    if (existingEmails.includes(email)) {
-      setSubmitError("Email is already on wait list");4
-      setIsSubmitting(false);
-      return;
-    }
+  
 
     try {
 
@@ -105,15 +69,11 @@ const Hero = () => {
         handleCloseModal();
         setSuccess("You have been added to wait list successfully");
         toast.success("Thanks for joining our wait list we'll keep you updated");
-      } else {
-
-
-        toast.error(`${firstResponse.data.message}`);
-      }
-      
+      } 
      
     } catch (error) {
       console.error("Error:", error);
+      toast.error(`${error.response.data.message}`);
       setSubmitError("An error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);
