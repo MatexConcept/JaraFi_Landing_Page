@@ -26,37 +26,37 @@ const Hero = () => {
     setSubmitError(null);
   };
 
-  useEffect(() => {
-    // This useEffect hook fetches existing email addresses from a SheetDB API when the component mounts.
-    // Its purpose is to prevent duplicate email submissions to the wait list.
-    const handleFetch = async () => {
+  // useEffect(() => {
+  //   // This useEffect hook fetches existing email addresses from a SheetDB API when the component mounts.
+  //   // Its purpose is to prevent duplicate email submissions to the wait list.
+  //   const handleFetch = async () => {
 
-      try {
+  //     try {
 
-        const response = await fetch(
-          `https://sheetdb.io/api/v1/${sheetdbapi}`,
-          {
-            method: "GET",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-          }
-        );
+  //       const response = await fetch(
+  //         `https://sheetdb.io/api/v1/${sheetdbapi}`,
+  //         {
+  //           method: "GET",
+  //           headers: {
+  //             Accept: "application/json",
+  //             "Content-Type": "application/json",
+  //           },
+  //         }
+  //       );
 
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
+  //       if (!response.ok) {
+  //         throw new Error("Network response was not ok");
+  //       }
 
-        const data = await response.json();
-        const emails = data.map((item) => item.email).filter(Boolean);
-        setExistingEmails(emails);
-      } catch (error) {
-        console.error("Error fetching emails:", error);
-      }
-    };
-    handleFetch();
-  }, [sheetdbapi]);
+  //       const data = await response.json();
+  //       const emails = data.map((item) => item.email).filter(Boolean);
+  //       setExistingEmails(emails);
+  //     } catch (error) {
+  //       console.error("Error fetching emails:", error);
+  //     }
+  //   };
+  //   handleFetch();
+  // }, [sheetdbapi]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -76,8 +76,7 @@ const Hero = () => {
     try {
 
 
-      // const firstResponse = await axios.post("https://jarafibackend.vercel.app/waitlist/join", {fullname:name, email}, {withCredentials: true})
-      const firstResponse = await axios.post("http://localhost:3500/waitlist/join", {fullname:name, email}, {withCredentials: true})
+      const firstResponse = await axios.post("https://jarafibackend.vercel.app/waitlist/join", {fullname:name, email}, {withCredentials: true})
 
       console.log({firstResponse})
       
