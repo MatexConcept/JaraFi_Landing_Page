@@ -44,6 +44,7 @@ const Hero = () => {
 
       console.log({firstResponse})
       
+      
 
       if (firstResponse.status === 201) {
 
