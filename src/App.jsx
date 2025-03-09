@@ -1,14 +1,13 @@
-import Navbar from "./components/Navbar";
-import { icons, images } from "./constants";
-import { About, Footer, Hero, Services } from "./sections";
+import { Header, HeroSection, About, Features, FAQ, Footer } from "./index.js";
 
 function App() {
   return (
     <main className="relative overflow-x-hidden">
-      <Navbar />
-      <Hero />
+      <Header />
+      <HeroSection />
       <About />
-      <Services />
+      <Features />
+      <FAQ />
       <Footer />
     </main>
   );
